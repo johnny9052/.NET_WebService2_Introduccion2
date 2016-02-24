@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://eam.edu.co/webService" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://eam.edu.co/webService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://eam.edu.co/webService">
+      <s:element name="sumar">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="num1" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="num2" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sumarResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="sumarResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="restar">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="num1" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="num2" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="restarResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="restarResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCalculos">
+        <s:complexType />
+      </s:element>
+      <s:element name="getCalculosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getCalculosResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="sumarSoapIn">
+    <wsdl:part name="parameters" element="tns:sumar" />
+  </wsdl:message>
+  <wsdl:message name="sumarSoapOut">
+    <wsdl:part name="parameters" element="tns:sumarResponse" />
+  </wsdl:message>
+  <wsdl:message name="restarSoapIn">
+    <wsdl:part name="parameters" element="tns:restar" />
+  </wsdl:message>
+  <wsdl:message name="restarSoapOut">
+    <wsdl:part name="parameters" element="tns:restarResponse" />
+  </wsdl:message>
+  <wsdl:message name="getCalculosSoapIn">
+    <wsdl:part name="parameters" element="tns:getCalculos" />
+  </wsdl:message>
+  <wsdl:message name="getCalculosSoapOut">
+    <wsdl:part name="parameters" element="tns:getCalculosResponse" />
+  </wsdl:message>
+  <wsdl:portType name="CalculadoraWSSoap">
+    <wsdl:operation name="sumar">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Este metodo suma 2 numeros</wsdl:documentation>
+      <wsdl:input message="tns:sumarSoapIn" />
+      <wsdl:output message="tns:sumarSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="restar">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Este metodo resta 2 numeros y almacena el proceso en sesion</wsdl:documentation>
+      <wsdl:input message="tns:restarSoapIn" />
+      <wsdl:output message="tns:restarSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getCalculos">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retorna el historial de todas las restas realizadas</wsdl:documentation>
+      <wsdl:input message="tns:getCalculosSoapIn" />
+      <wsdl:output message="tns:getCalculosSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CalculadoraWSSoap" type="tns:CalculadoraWSSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="sumar">
+      <soap:operation soapAction="http://eam.edu.co/webService/sumar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="restar">
+      <soap:operation soapAction="http://eam.edu.co/webService/restar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCalculos">
+      <soap:operation soapAction="http://eam.edu.co/webService/getCalculos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CalculadoraWSSoap12" type="tns:CalculadoraWSSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="sumar">
+      <soap12:operation soapAction="http://eam.edu.co/webService/sumar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="restar">
+      <soap12:operation soapAction="http://eam.edu.co/webService/restar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCalculos">
+      <soap12:operation soapAction="http://eam.edu.co/webService/getCalculos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CalculadoraWS">
+    <wsdl:port name="CalculadoraWSSoap" binding="tns:CalculadoraWSSoap">
+      <soap:address location="http://localhost:2018/CalculadoraWS.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CalculadoraWSSoap12" binding="tns:CalculadoraWSSoap12">
+      <soap12:address location="http://localhost:2018/CalculadoraWS.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
